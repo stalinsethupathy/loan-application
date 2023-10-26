@@ -1,0 +1,110 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Your API Documentation",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/loan-application": {
+      "post": {
+        "summary": "Submit a loan application",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoanApplicationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Application received successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/loan-application/{applicationNumber}": {
+      "get": {
+        "summary": "Get loan application status",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "applicationNumber",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Application status retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationStatus"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "LoanApplicationRequest": {
+        "type": "object",
+        "properties": {
+          "lanetakere": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "fnr": {
+                  "type": "string"
+                },
+                "navn": {
+                  "type": "string"
+                }
+              },
+              "required": ["fnr", "navn"]
+            }
+          },
+          "lanebelop": {
+            "type": "number"
+          },
+          "behov": {
+            "type": "string"
+          }
+        },
+        "required": ["lanetakere", "lanebelop", "behov"]
+      },
+      "ApplicationResponse": {
+        "type": "object",
+        "properties": {
+          "applicationNumber": {
+            "type": "string"
+          }
+        }
+      },
+      "ApplicationStatus": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

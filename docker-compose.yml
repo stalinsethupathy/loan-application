@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: php.Dockerfile
+    ports:
+      - '8084:80'
+    volumes:
+      - ./:/var/www/html
+    working_dir: /var/www/html
+
+  db:
+    image: mariadb:10.10
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MARIADB_DATABASE: secret
+      MARIADB_USER: secret
+      MARIADB_PASSWORD: secret
+    ports:
+      - 33306:3306
